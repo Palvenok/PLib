@@ -1,20 +1,26 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace PLib.Pool
 {
     /// <summary>
     /// Easy object pool pattern realization
     /// </summary>
-    public sealed class ObjectPool<T> where T : UnityEngine.Object
+    public sealed class ObjectPool<T> : IEnumerable where T : UnityEngine.Object
     {
         private T[] _pool;
         private int _count;
-        private int _currentItemIndex = 0;
+        private int _currentIndex = -1;
         private GameObject _poolContainer;
 
         public int Count => _count;
-        public int CurrentItemIndex => _currentItemIndex;
-        public T CurrentItem => _pool[_currentItemIndex];
+        //public int CurrentItemIndex => _currentItemIndex;
+        public T Current
+        {
+            get { return _pool[_currentIndex < 0 ? 0 : _currentIndex ]; }
+        }
+
+        public IEnumerator GetEnumerator() => new ObjectIterator(this);
 
         /// <summary>
         /// Create pool container as parrent and instantiate items by count
@@ -58,12 +64,12 @@ namespace PLib.Pool
         /// id &gt; pool.Count : return last item <br/>
         /// id &lt; 0 : return first (id: 0) item
         /// </summary>
-        public T GetByID(int id)
+        public T GetByIndex(int index)
         {
-            id = id < 0 ? 0 : id >= _count ? _count - 1 : id;
-            _currentItemIndex = id;
+            index = index < 0 ? -1 : index >= _count ? _count - 1 : index;
+            _currentIndex = index;
 
-            return _pool[_currentItemIndex];
+            return Current;
         }
 
         /// <summary>
@@ -72,9 +78,9 @@ namespace PLib.Pool
         /// </summary>
         public T GetNext()
         {
-            _currentItemIndex++;
-            if (_currentItemIndex >= _count) _currentItemIndex = 0;
-            return _pool[_currentItemIndex];
+            _currentIndex++;
+            if (_currentIndex >= _count) _currentIndex = -1;
+            return Current;
         }
 
         /// <summary>
@@ -86,7 +92,32 @@ namespace PLib.Pool
                 Object.Destroy(_poolContainer);
             _pool = null;
             _count = 0;
-            _currentItemIndex = 0;
+            _currentIndex = 0;
+        }
+
+        private class ObjectIterator : IEnumerator
+        {
+            private ObjectPool<T> _objectPool;
+            private int _currentIndex = -1;
+
+            public ObjectIterator(ObjectPool<T> objectPool)
+            {
+                _objectPool = objectPool;
+            }
+
+            public object Current => _objectPool._pool[_currentIndex];
+
+            public bool MoveNext()
+            {
+                _currentIndex++;
+                if(_currentIndex < _objectPool._count) return true;
+                else return false;
+            }
+
+            public void Reset()
+            {
+                _currentIndex = -1;
+            }
         }
     }
 }
