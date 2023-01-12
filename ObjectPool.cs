@@ -32,6 +32,7 @@ namespace PLib.Pool
             _pool = new T[count];
 
             _poolContainer = new GameObject();
+            ///TODO: fix custom pool name
             _poolContainer.name = objectPrefab.name + poolName;
 
             Init(objectPrefab, _poolContainer.transform);
