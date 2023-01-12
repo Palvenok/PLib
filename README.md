@@ -1,4 +1,5 @@
 # Pattern library for Unity
+Tested and packed in Unity3D 2021.3.15f1
 ## Tablet
 - [ObjectPool](#objectpool)
   - [Usage](#usage)
