@@ -53,6 +53,7 @@ namespace PLib.Pool
 
         private void Init(T objectPrefab, Transform parent)
         {
+            _currentIndex = -1;
             for (int i = 0; i < _count; i++)
             {
                 _pool[i] = Object.Instantiate(objectPrefab, parent);
@@ -92,7 +93,7 @@ namespace PLib.Pool
                 Object.Destroy(_poolContainer);
             _pool = null;
             _count = 0;
-            _currentIndex = 0;
+            _currentIndex = -1;
         }
 
         private class ObjectIterator : IEnumerator
