@@ -86,9 +86,11 @@ using PLib.Singleton;
 
 public class SomeClass : Singleton<SomeClass>
 {
+  // If you need Awake method
   private void Awake()
   {
     base.Awake();
+    // Your code
   }
 }
 ```
