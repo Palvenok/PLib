@@ -1,4 +1,4 @@
-# Pattern library for Unity
+# Utility library for Unity
 Tested and packed in Unity3D 2021.3.15f1
 ## Tablet
 - [ObjectPool](#objectpool)
@@ -86,9 +86,11 @@ using PLib.Singleton;
 
 public class SomeClass : Singleton<SomeClass>
 {
+  // If you need Awake method
   private void Awake()
   {
     base.Awake();
+    // Your code
   }
 }
 ```
