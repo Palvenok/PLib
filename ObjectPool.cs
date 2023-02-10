@@ -14,7 +14,7 @@ namespace PLib.Pool
         private GameObject _poolContainer;
 
         public int Count => _count;
-        //public int CurrentItemIndex => _currentItemIndex;
+        public GameObject ContainerObject => _poolContainer;
         public T Current
         {
             get { return _pool[_currentIndex < 0 ? 0 : _currentIndex ]; }
@@ -81,7 +81,7 @@ namespace PLib.Pool
         public T GetNext()
         {
             _currentIndex++;
-            if (_currentIndex >= _count) _currentIndex = -1;
+            if (_currentIndex >= _count) _currentIndex = 0;
             return Current;
         }
 
