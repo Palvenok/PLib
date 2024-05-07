@@ -4,7 +4,7 @@ using UnityEngine;
 namespace PLib.Pool
 {
     /// <summary>
-    /// Easy object pool pattern realization
+    /// Light object pool pattern realization
     /// </summary>
     public sealed class ObjectPool<T> : IEnumerable where T : UnityEngine.Object
     {
@@ -32,8 +32,10 @@ namespace PLib.Pool
             _pool = new T[count];
 
             _poolContainer = new GameObject();
-            ///TODO: fix custom pool name
-            _poolContainer.name = objectPrefab.name + poolName;
+            if (poolName = "PoolContainer")
+                _poolContainer.name = objectPrefab.name + poolName;
+            else
+                _poolContainer.name = poolName;
 
             Init(objectPrefab, _poolContainer.transform);
 
