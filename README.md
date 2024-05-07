@@ -33,7 +33,7 @@ Tested and packed in Unity3D 2021.3.15f1
   ```cs
   var item = pool.GetNext();
   ```
-  * Clear() - just delete pool container game object, clear inner array, `be careful: can delete itself`
+  * Clear() - just delete pool container game object, clear inner array
   ```cs
   pool.Clear();
   ```
