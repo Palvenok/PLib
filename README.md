@@ -21,6 +21,10 @@ Tested and packed in Unity3D 2021.3.15f1
   ```cs
   var item = pool.Current;
   ```
+  * ContainerObject - return container GameObject
+  ```cs
+  GameObject count = pool.ContainerObject;
+  ```
   * Count - return items count
   ```cs
   int count = pool.Count;
@@ -52,10 +56,12 @@ public class EnemyPoolContainer : MonoBehaviour
   [SerializeField] private int _enemiesCount = 10;
 
   private ObjectPool<Enemy> _enemies;
+  private GameObject _container;
 
   private void Awake()
   {
       _enemies = new ObjectPool<Enemy>(_enemyPrefab, _enemiesCount, transform);
+      _container = _enemies.ContainerObject;
 
       foreach(Enemy enemy in _enemies)
           enemy.transform.position = Random.insideUnitCircle * 5;
